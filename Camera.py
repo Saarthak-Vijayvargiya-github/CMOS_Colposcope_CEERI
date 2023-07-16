@@ -9,7 +9,7 @@
 -> When 'a' is pressed, it will send the command to arduino and dataVar.aFocus_status is set to 1. Now aFocus_status
 will read the value via port, and when 1 is detected dataVar.aFocus_status is set to 2 for recording values inside 
 laplace(). When aFocus_status is 2, then autoFocus() calculates the loop which has maximum focus and sends
-the loop number via port to the arduino. initValues() initialises the list of laplace and dataVar.aFocus_status.
+the loop number via port to the arduino. initValues() initialises the list of laplace and dataVar.aFocus_status
 -> Basically dataVar.aFocus_status gets the status at the starting of operation and aFocus_status(local to file) 
 records the status of completion.
 
@@ -36,7 +36,7 @@ def laplace(img):
     m1.dataVar.prevValue = m1.dataVar.currValue
     m1.dataVar.currValue = cv2.Laplacian(img, cv2.CV_64F).var()
     m1.dataVar.currValue = round(m1.dataVar.currValue,2)
-    print(f"Previous: {m1.dataVar.prevValue},   Laplace: {m1.dataVar.currValue}")
+    m1.dataVar.info()
     if m1.dataVar.aFocus_status == 2:
         m1.dataVar.record(m1.dataVar.currValue)
         # print(m1.dataVar.laplaceValues)

@@ -10,7 +10,7 @@
 -> initSerial() shows the list of available ports, asks the user to enter the COM number and 
 initialises the port which has to be used for communication.
 -> serialCommFocus() is run to read the value returned by arduino via port.
--> sendAutoFCommand() sends the command (currently set to "10") to the arduino to run autoFocusCheck() of the arduino.
+-> sendAutoFCommand() sends the command (currently set to "A") to the arduino to run autoFocusCheck() of the arduino.
 -> autoFocus() takes the recorded laplace values, find it's max, and as the values are distributed within 75 loops
 therefore calculates the loop no. in which value was maximum. Then that loop no. is sent to arduino.
 (in this case 75 loops because total number of steps in stepper motor are 3009 and 40 steps are taken in one loop, so 
