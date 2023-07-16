@@ -21,7 +21,7 @@ loop number out of 75 which has the max value would be [(y/x)*75])
 import serial.tools.list_ports
 import time
 LOOPS = 75              # No. of loops taken by stepper motor for focus for full traversing of the lens.
-AUTOF_COMMAND = "10"    # Command sent through serial port to arduino.
+AUTOF_COMMAND = "A"    # Command sent through serial port to arduino.
 
 class Data:
     def __init__(self,prev,curr,aF_s):
@@ -61,14 +61,13 @@ def initSerial():
 
     serial_inst.baudrate = 9600
     serial_inst.port = port_var
-    serial_inst.timeout = 1
+    serial_inst.timeout = 0.05           # If this is less, then sped of capturing will be more
     serial_inst.open()
 
 def serialCommFocus():
     global status
+    status = serial_inst.read(size=1)
     try:
-        status = serial_inst.readline()
-        print(int(status))
         return int(status)
     except:
         return 0
@@ -85,6 +84,7 @@ def autoFocus():
     focus_index = int(LOOPS * max_index/len(dataVar.laplaceValues))
     focus_index = str(focus_index)
     serial_inst.write(focus_index.encode('utf-8'))
+    # print(max_value, max_index, len(dataVar.laplaceValues), focus_index)
     time.sleep(0.05)
     # data = serial_inst.readline()
     # print("Loops:", data)

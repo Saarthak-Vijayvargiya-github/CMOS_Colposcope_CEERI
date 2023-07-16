@@ -2,7 +2,8 @@
 #include <Arduino.h>
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
-#define AUTOFOCUS_COMMAND 10      // Value sent by python code by triggering sendAutoFCommand()
+#define AUTOFOCUS_COMMAND "A"      // Value sent by python code by triggering sendAutoFCommand()
+#define LOOPS 75
 
 const int stepsPerRevolution_focus_servo = 20;
 const int stepsPerRevolution_zoom_servo = 50;
@@ -12,7 +13,7 @@ const int total_focus_servo_steps=3009;
 
 int zoomSteps = 0; int zoomState = 0;
 int focusSteps = 0;
-int x = 0;
+String x = "0"; int y = 0;
 
 Stepper focus_stepper(stepsPerRevolution_focus_servo, 13, 11, 9, 10);
 Stepper zoom_stepper(stepsPerRevolution_zoom_servo, 5, 6, 8, 2);
@@ -63,12 +64,18 @@ void loop ()
  int zoom_out_state=digitalRead(zoom_out);
  int focus_plus_state=digitalRead(focus_plus);
  int focus_minus_state=digitalRead(focus_minus);
-  x = Serial.readString().toInt();
-//  Serial.print(x);
-  if(x == AUTOFOCUS_COMMAND){
-    autoFocusCheck();
-    delay(100);
+
+ if (Serial.available() > 0) {
+    // read the incoming byte:
+    x = Serial.readString();
+    Serial.print(x);
+    if(x == AUTOFOCUS_COMMAND){
+      Serial.print(x);
+      autoFocusCheck();
+      delay(100);
+    }
  }
+
  if (zoom_in_state==LOW)
  {
   current_steps_zoom=5*stepsPerRevolution_zoom_servo;
@@ -105,14 +112,6 @@ void loop ()
  }
 }
 
-void check(){
-  x = Serial.readString().toInt();
-  Serial.print(x);
-  if(x == AUTOFOCUS_COMMAND){
-    check();
- }
-}
-
 void autoFocusCheck(){
   for (int i=0; i<(int)(total_focus_servo_steps/(2*stepsPerRevolution_focus_servo)); i++)
   {
@@ -129,12 +128,13 @@ void autoFocusCheck(){
   Serial.print(2);
   delay(500);
   checkAfter();
-  x = 0;
+  x = "0";
 }
 
 void checkAfter(){
-  x = Serial.readString().toInt();
-  focus_stepper.step(focusSteps - (x*(-2*stepsPerRevolution_focus_servo)));
+  while(Serial.available() == 0){}
+  y = Serial.readString().toInt();
+  focus_stepper.step(((LOOPS-y)*(-2*stepsPerRevolution_focus_servo)));
 }
 
 /************

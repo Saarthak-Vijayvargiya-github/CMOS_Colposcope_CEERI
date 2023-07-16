@@ -39,7 +39,7 @@ def laplace(img):
     print(f"Previous: {m1.dataVar.prevValue},   Laplace: {m1.dataVar.currValue}")
     if m1.dataVar.aFocus_status == 2:
         m1.dataVar.record(m1.dataVar.currValue)
-        print(m1.dataVar.laplaceValues)
+        # print(m1.dataVar.laplaceValues)
 
 
 while True:
@@ -55,7 +55,7 @@ while True:
     laplace(img)
     # laplacian = cv2.Laplacian(img, cv2.CV_64F)                    # For showing laplacian
     # cv2.imshow("Laplacian Footage",laplacian)
-    if m1.dataVar.aFocus_status == 1 or 2:
+    if m1.dataVar.aFocus_status == 1 or m1.dataVar.aFocus_status == 2:
         aFocus_status = m1.serialCommFocus()
     if aFocus_status == 1:
         m1.dataVar.aFocus_status = 2
