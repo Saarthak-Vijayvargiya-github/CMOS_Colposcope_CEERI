@@ -61,7 +61,7 @@ def initSerial():
 
     serial_inst.baudrate = 9600
     serial_inst.port = port_var
-    serial_inst.timeout = 0.05           # If this is less, then sped of capturing will be more
+    serial_inst.timeout = 0.05           # If this is increased, then speed of capturing will decrease
     serial_inst.open()
 
 def serialCommFocus():
