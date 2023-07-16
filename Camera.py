@@ -66,9 +66,9 @@ while True:
     else: pass
 
     k = cv2.waitKey(1)
-    if k & 0xFF == ord('a'):
+    if k & 0xFF == ord('a'):                            # Auto Focussing key
         m1.sendAutoFCommand()
-    if k%256 == 27:
+    if k%256 == 27:                                     # ESC key
         print("Closing")
         break
 
