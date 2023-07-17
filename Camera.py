@@ -36,7 +36,7 @@ def laplace(img):
     m1.dataVar.prevValue = m1.dataVar.currValue
     m1.dataVar.currValue = cv2.Laplacian(img, cv2.CV_64F).var()
     m1.dataVar.currValue = round(m1.dataVar.currValue,2)
-    m1.dataVar.info()
+    # m1.dataVar.info()
     if m1.dataVar.aFocus_status == 2:
         m1.dataVar.record(m1.dataVar.currValue)
         # print(m1.dataVar.laplaceValues)
@@ -59,8 +59,11 @@ while True:
         aFocus_status = m1.serialCommFocus()
     if aFocus_status == 1:
         m1.dataVar.aFocus_status = 2
+        print("Recording Values...","Lens going to the last position")
     elif aFocus_status == 2:
+        print("Calculating Best Position...")
         m1.autoFocus()
+        print("Going to best position...")
         m1.initValues()
         aFocus_status = 0
     else: pass
@@ -68,6 +71,7 @@ while True:
     k = cv2.waitKey(1)
     if k & 0xFF == ord('a'):                            # Auto Focussing key
         m1.sendAutoFCommand()
+        print("AutoFocus Triggered!","Lens going at starting position.")
     if k%256 == 27:                                     # ESC key
         print("Closing")
         break

@@ -61,7 +61,7 @@ def initSerial():
 
     serial_inst.baudrate = 9600
     serial_inst.port = port_var
-    serial_inst.timeout = 0.03           # If this is increased, then speed of capturing will decrease
+    serial_inst.timeout = 0.02           # If this is increased, then speed of capturing will decrease
     serial_inst.open()
 
 def serialCommFocus():
@@ -81,10 +81,11 @@ def sendAutoFCommand():
 def autoFocus():
     max_value = max(dataVar.laplaceValues)
     max_index = dataVar.laplaceValues.index(max_value)
-    focus_index = int(LOOPS * max_index/len(dataVar.laplaceValues))
+    focus_index = round(LOOPS * max_index/len(dataVar.laplaceValues))
     focus_index = str(focus_index)
     serial_inst.write(focus_index.encode('utf-8'))
-    # print(max_value, max_index, len(dataVar.laplaceValues), focus_index)
+    print("Total values recorded:", len(dataVar.laplaceValues),"Maximum Contrast Value:",max_value)
+    print("Index in the list:", max_index,"\nLoop of the focus:", focus_index)
     time.sleep(0.05)
     # data = serial_inst.readline()
     # print("Loops:", data)
