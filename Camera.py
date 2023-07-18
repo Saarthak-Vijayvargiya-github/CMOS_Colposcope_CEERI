@@ -22,7 +22,6 @@ point aFocus_status detects it's value as 2.
 *************************************************************************************************"""
 
 import cv2
-import time
 import main1 as m1
 
 m1.initSerial()
@@ -32,7 +31,6 @@ m1.initValues()
 aFocus_status = 0
 
 def laplace(img):
-    time.sleep(0.01)
     m1.dataVar.prevValue = m1.dataVar.currValue
     m1.dataVar.currValue = cv2.Laplacian(img, cv2.CV_64F).var()
     m1.dataVar.currValue = round(m1.dataVar.currValue,2)
