@@ -20,7 +20,7 @@ loop number out of 75 which has the max value would be [(y/x)*75])
 
 import serial.tools.list_ports
 import time
-LOOPS = 74              # No. of loops taken by stepper motor for focus for full traversing of the lens.
+LOOPS = 75              # No. of loops taken by stepper motor for focus for full traversing of the lens.
 AUTOF_COMMAND = "A"    # Command sent through serial port to arduino.
 
 class Data:

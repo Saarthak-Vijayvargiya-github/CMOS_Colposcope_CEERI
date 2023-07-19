@@ -3,7 +3,7 @@
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
 #define AUTOFOCUS_COMMAND "A"      // Value sent by python code by triggering sendAutoFCommand()
-#define LOOPS 74
+#define LOOPS 75
 
 const int stepsPerRevolution_focus_servo = 20;
 const int stepsPerRevolution_zoom_servo = 50;
